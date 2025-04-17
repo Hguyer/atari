@@ -7,25 +7,30 @@ public class Ball {
     private int diameter;
 
     public Ball(double x, double y, int diameter, double dx, double dy) {
+        this.x = x;
+        this.y = y;
+        this.diameter = diameter;
+        this.dx = dx;
+        this.dy = dy;
     }
     public void move() {
-
-    }
-    public boolean checkCollision(Paddle paddle) {
-        return false;
-    }
-    public boolean checkCollision(Brick brick) {
-        return false;
+        x += dx;
+        y += dy;
     }
     public double getX() {
+        return x;
     }
     public double getY() {
+        return y;
     }
     public double getDx() {
+        return dx;
     }
     public double getDy() {
+        return dy;
     }
     public int getDiameter() {
+        return diameter;
     }
 
 }

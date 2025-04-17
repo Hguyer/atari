@@ -9,13 +9,33 @@ public class Brick {
     private Color color;
 
     public Brick(int x, int y, int width, int height, Color color) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.isDestroyed = false;
     }
 
-    public void hit() {}
+    public void hit() {
+        isDestroyed = true;
+    }
     public boolean isDestroyed() {
-        return false;
+        return isDestroyed;
     }
     public Color getColor() {
-        return null;
+        return color;
+    }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
     }
 }
