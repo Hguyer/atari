@@ -4,8 +4,7 @@ public class Paddle {
     private int width;
     private int height;
 
-    private static final int WINDOW_HEIGHT = 1700;
-    private static final int WINDOW_WIDTH = 2700;
+    private static final int WINDOW_WIDTH = 1250;
 
     public Paddle(int x, int y, int width, int height) {
         this.x = x;

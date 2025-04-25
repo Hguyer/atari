@@ -7,7 +7,7 @@ public class Brick {
     private int height;
     private boolean isDestroyed;
     private Color color;
-
+    // constructor
     public Brick(int x, int y, int width, int height, Color color) {
         this.x = x;
         this.y = y;
@@ -16,7 +16,7 @@ public class Brick {
         this.color = color;
         this.isDestroyed = false;
     }
-
+    // getters and setters
     public void hit() {
         isDestroyed = true;
     }
