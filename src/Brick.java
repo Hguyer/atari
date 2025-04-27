@@ -38,4 +38,7 @@ public class Brick {
     public int getHeight() {
         return height;
     }
+    public void reset() {
+        this.isDestroyed = false;
+    }
 }

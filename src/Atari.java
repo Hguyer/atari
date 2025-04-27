@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Atari implements ActionListener {
-    private static final int DELAY = 33;
+    private static final int DELAY = 30;
     private Paddle paddle;
     private Ball ball;
     private Brick[][] bricks;
@@ -16,7 +16,6 @@ public class Atari implements ActionListener {
     private boolean resetBall; // Flag to indicate ball reset
     private int resetDelay;
     private boolean gameOver;
-
     public Atari(int gameWidth, int gameHeight, int rows, int cols) {
         // add in the backend
         viewer = new AtariViewer(this);
@@ -155,9 +154,19 @@ public class Atari implements ActionListener {
                         else {
                             score+=10;
                         }
+                        if(b.getDx() > 0){
+                            b.setDx(b.getDx() + ((Math.random()* 5.1) - 2.5));
+                        }
+                        else{
+                            b.setDx(b.getDx() - ((Math.random()* 5.1) - 2.5));
+                        }
 
-                        b.setDx(b.getDx() + (Math.random()* 5.1) - 2.5);
-                        b.setDy(b.getDy() + (Math.random()));
+                        if(b.getDy() > 0){
+                            b.setDx(b.getDx() + (Math.random()));
+                        }
+                        else{
+                            b.setDy(b.getDy() - (Math.random()));
+                        }
                         b.setDy(-b.getDy());
                         return;
                     }
@@ -176,8 +185,32 @@ public class Atari implements ActionListener {
         resetBall = false;
         resetDelay = 0;
     }
+    public void reset(){
+        this.score = 0;
+        this.lives = 3; // or however many lives you start with
+
+        // Reset the ball position and velocity
+        ball.resetPosition(); // assuming your Ball class has a resetPosition() method
+
+        // Reset the paddle position
+        paddle.resetPosition(); // assuming your Paddle class has a resetPosition() method
+
+        // Reset all bricks (make them undestroyed)
+        for (int i = 0; i < bricks.length; i++) {
+            for (int j = 0; j < bricks[i].length; j++) {
+                bricks[i][j].reset(); // assuming Brick class has a reset() method that marks it as not destroyed
+            }
+        }
+
+        // Reset the game over flag
+        this.gameOver = false;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (viewer.welcomeScreen) {
+            viewer.repaint();
+            return; // Do nothing until the player clicks
+        }
         // move if the game isn't over and the ball isn't reset
         if (!gameOver && !resetBall) {
             ball.move();

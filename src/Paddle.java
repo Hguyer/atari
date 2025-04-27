@@ -34,4 +34,8 @@ public class Paddle {
             this.x = WINDOW_WIDTH - width;
         }
     }
+    public void resetPosition() {
+        this.x = 625 - (this.width / 2);
+        this.y = 850;
+    }
 }

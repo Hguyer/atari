@@ -7,16 +7,33 @@ public class AtariViewer extends JFrame {
     private Atari game;
     private static final int WINDOW_HEIGHT = 900;
     private static final int WINDOW_WIDTH = 1250;
+    boolean welcomeScreen = true;
+    private Image openingImage;
+
 
 
     public AtariViewer(Atari game) {
         this.game = game;
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        openingImage = new ImageIcon("Resources/Opening.png").getImage();
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 game.updatePaddlePosition(e.getX());
+            }
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (welcomeScreen) {
+                    welcomeScreen = false;
+                }
+                else if (game.isGameOver()) {
+                    game.reset();  // <- assuming you have a reset method
+                    welcomeScreen = false;
+                    repaint();
+                }
             }
         });
 
@@ -24,11 +41,27 @@ public class AtariViewer extends JFrame {
 
         createBufferStrategy(2);
     }
+
     @Override
     public void paint(Graphics g) {
         Image offImage = createImage(WINDOW_WIDTH, WINDOW_HEIGHT);
         Graphics offGraphics = offImage.getGraphics();
-        if (game.isGameOver()) {
+
+        if (welcomeScreen) {
+            // Draw welcome screen
+            offGraphics.setColor(Color.BLACK);
+            offGraphics.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+            // Draw your preloaded welcome image
+            offGraphics.drawImage(openingImage, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
+            // Draw text on top
+            offGraphics.setColor(Color.WHITE);
+            offGraphics.setFont(new Font("Arial", Font.BOLD, 80));
+            offGraphics.drawString("Welcome to Atari Breakout!", 120, 330);
+            offGraphics.setFont(new Font("Arial", Font.ITALIC, 60));
+            offGraphics.drawString("Click to Start", 450, 400);
+        }
+       else if (game.isGameOver()) {
             // Display game over screen
             offGraphics.setColor(Color.BLACK);
             offGraphics.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
