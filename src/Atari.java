@@ -16,6 +16,8 @@ public class Atari implements ActionListener {
     private boolean resetBall; // Flag to indicate ball reset
     private int resetDelay;
     private boolean gameOver;
+
+
     public Atari(int gameWidth, int gameHeight, int rows, int cols) {
         // add in the backend
         viewer = new AtariViewer(this);
