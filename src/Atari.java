@@ -16,6 +16,7 @@ public class Atari implements ActionListener {
     private boolean resetBall; // Flag to indicate ball reset
     private int resetDelay;
     private boolean gameOver;
+    private int level;
 
 
     public Atari(int gameWidth, int gameHeight, int rows, int cols) {
@@ -23,10 +24,11 @@ public class Atari implements ActionListener {
         viewer = new AtariViewer(this);
         // make a new ball & paddle in the middle bricks at the top that change colors depending on the row, lives, score
         paddle = new Paddle(gameWidth / 2 - 40, gameHeight - 70, 150, 10);
-        ball = new Ball(gameWidth / 2, gameHeight / 2, 20, 4.7, 9);
+        ball = new Ball(gameWidth / 2, gameHeight / 2, 20, 4.7, 4);
         score = 0;
         gameOver = false;
         lives = 3;
+        level = 1;
         bricks = new Brick[rows][cols];
         int brickHeight = 60;
         int brickWidth = 125;
@@ -39,21 +41,20 @@ public class Atari implements ActionListener {
                 Color color;
                 // switch case for the colors
                 switch (i) {
-                    //top
                     case 0:
-                        color = Color.RED;
+                        color = new Color(255, 0, 0, 180);
                         break;
-                    case 1: // Third from bottom
-                        color = Color.ORANGE;
+                    case 1:
+                        color = new Color(255, 165, 0, 180);
                         break;
-                    case 2: // Second from bottom
-                        color = Color.YELLOW;
+                    case 2:
+                        color = new Color(255, 255, 0, 180);
                         break;
-                    case 3: // Bottom row
-                        color = Color.GREEN;
+                    case 3:
+                        color = new Color(0, 255, 0, 180);
                         break;
                     default:
-                        color = Color.RED;
+                        color = new Color(255, 0, 0, 180);
                 }
                 bricks[i][j] = new Brick(brickX, brickY, brickWidth, brickHeight, color);
             }
@@ -66,10 +67,13 @@ public class Atari implements ActionListener {
         Timer clock = new Timer(DELAY, this);
         clock.start();
     }
+
     // getters and setters
     public Paddle getPaddle() {
         return paddle;
     }
+
+    public int getLevel() {return level;}
 
     public Ball getBall() {
         return ball;
@@ -86,9 +90,11 @@ public class Atari implements ActionListener {
     public int getLives() {
         return lives;
     }
+
     public boolean isGameOver() {
         return gameOver;
     }
+
     // using the mouselistener in viewer update the paddle's x according to
     public void updatePaddlePosition(int mouseX) {
         paddle.moveTo(mouseX - paddle.getWidth() / 2);
@@ -103,12 +109,12 @@ public class Atari implements ActionListener {
                 b.getY() + b.getDiameter() >= p.getY() &&
                 b.getY() <= p.getY() + p.getHeight()) {
             //randomness so it doesn't bounce where expected
-            b.setDx(b.getDx() + (Math.random()* 5.1) - 2.5);
+            b.setDx(b.getDx() + (int)(Math.random()* 11) - 5);
             b.setDy(-b.getDy());
         }
     }
     // if it hits a wall bounce
-    private void checkWallCollision() {
+    public void checkWallCollision() {
         Ball b = ball;
         if (b.getX() <= 0 || b.getX() + b.getDiameter() >= WINDOW_WIDTH) {
             b.setDx(-b.getDx());
@@ -132,7 +138,7 @@ public class Atari implements ActionListener {
         }
     }
 
-    private void checkBrickCollision() {
+    public void checkBrickCollision() {
         Ball b = ball;
         for (int i = 0; i < bricks.length; i++) {
             for (int j = 0; j < bricks[i].length; j++) {
@@ -156,11 +162,12 @@ public class Atari implements ActionListener {
                         else {
                             score+=10;
                         }
+                       
                         if(b.getDx() > 0){
-                            b.setDx(b.getDx() + ((Math.random()* 5.1) - 2.5));
+                            b.setDx(b.getDx() + ((Math.random()* 9.1) - 4.5));
                         }
                         else{
-                            b.setDx(b.getDx() - ((Math.random()* 5.1) - 2.5));
+                            b.setDx(b.getDx() - ((Math.random()* 9.1) - 4.5));
                         }
 
                         if(b.getDy() > 0){
@@ -176,9 +183,34 @@ public class Atari implements ActionListener {
             }
         }
     }
+    public boolean allBricksDestroyed() {
+        for (int i = 0; i < bricks.length; i++) {
+            for (int j = 0; j < bricks[i].length; j++) {
+                if (!bricks[i][j].isDestroyed()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void startNewLevel() {
+        ball.resetPosition();
+        level++;
+        resetBall = true;
+        resetDelay = 66;
+        // Reset bricks
+        for (int i = 0; i < bricks.length; i++) {
+            for (int j = 0; j < bricks[i].length; j++) {
+                bricks[i][j].reset();
+            }
+        }
+        ball.setDx(ball.getDx() * 1.1);
+        ball.setDy(ball.getDy() * 1.1);
+    }
 
     // reset the position with a random dx
-    private void resetBall() {
+    public void resetBall() {
 
         ball.setX(WINDOW_WIDTH / 2);
         ball.setY(WINDOW_HEIGHT / 2);
@@ -192,15 +224,14 @@ public class Atari implements ActionListener {
         this.lives = 3; // or however many lives you start with
 
         // Reset the ball position and velocity
-        ball.resetPosition(); // assuming your Ball class has a resetPosition() method
-
+        ball.resetPosition();
         // Reset the paddle position
-        paddle.resetPosition(); // assuming your Paddle class has a resetPosition() method
+        paddle.resetPosition();
 
         // Reset all bricks (make them undestroyed)
         for (int i = 0; i < bricks.length; i++) {
             for (int j = 0; j < bricks[i].length; j++) {
-                bricks[i][j].reset(); // assuming Brick class has a reset() method that marks it as not destroyed
+                bricks[i][j].reset();
             }
         }
 
@@ -215,6 +246,9 @@ public class Atari implements ActionListener {
         }
         // move if the game isn't over and the ball isn't reset
         if (!gameOver && !resetBall) {
+            if (allBricksDestroyed()) {
+                startNewLevel();
+            }
             ball.move();
             checkWallCollision();
             checkPaddleCollision();

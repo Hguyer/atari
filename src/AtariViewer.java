@@ -68,8 +68,11 @@ public class AtariViewer extends JFrame {
             offGraphics.setColor(Color.WHITE);
             offGraphics.setFont(new Font("Arial", Font.BOLD, 100));
             String gameOverText = "Game Over";
-            offGraphics.drawString(gameOverText, (WINDOW_WIDTH) / 2 - 190, (WINDOW_HEIGHT) / 2 - 50);
+            offGraphics.drawString(gameOverText, (WINDOW_WIDTH) / 2 - 220, (WINDOW_HEIGHT) / 2 - 50);
+            String instructionsText = "Click anywhere to reset";
+            offGraphics.setFont(new Font("Times New Roman", Font.ITALIC, 40));
 
+            offGraphics.drawString(instructionsText, (WINDOW_WIDTH) / 2 - 140, (WINDOW_HEIGHT) / 2);
         }
         else {
 
@@ -89,6 +92,11 @@ public class AtariViewer extends JFrame {
                     }
                 }
             }
+            if (game.allBricksDestroyed() && game.getLives() > 0 && !game.isGameOver()) {
+                offGraphics.setColor(Color.WHITE);
+                offGraphics.setFont(new Font("Arial", Font.BOLD, 80));
+                offGraphics.drawString("Level " + game.getLevel() + " Complete!", WINDOW_WIDTH / 2 - 300, WINDOW_HEIGHT / 2);
+            }
 
             offGraphics.setColor(Color.WHITE);
             offGraphics.fillRect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
@@ -98,6 +106,7 @@ public class AtariViewer extends JFrame {
             offGraphics.setFont(new Font("Playfair Display", Font.BOLD, 20));
             offGraphics.drawString("Score: " + game.getScore(), 10, 50);
             offGraphics.drawString("Lives: " + game.getLives(), 150, 50);
+            offGraphics.drawString("Level: " + game.getLevel(), 290, 50);
         }
         g.drawImage(offImage, 0, 0, this);
     }
