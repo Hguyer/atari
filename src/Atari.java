@@ -205,8 +205,8 @@ public class Atari implements ActionListener {
                 bricks[i][j].reset();
             }
         }
-        ball.setDx(ball.getDx() * 1.1);
-        ball.setDy(ball.getDy() * 1.1);
+        ball.setDx(-4 * 1.1*level);
+        ball.setDy(4 * 1.1*level);
     }
 
     // reset the position with a random dx
