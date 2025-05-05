@@ -17,6 +17,7 @@ public class Atari implements ActionListener {
     private int resetDelay;
     private boolean gameOver;
     private int level;
+    private Image brickImage;
 
 
     public Atari(int gameWidth, int gameHeight, int rows, int cols) {
@@ -33,6 +34,9 @@ public class Atari implements ActionListener {
         int brickHeight = 60;
         int brickWidth = 125;
         int spacing = 12;
+        int randomImageIndex = (int) (Math.random() * 16);
+        String imagePath = "Resources/" + randomImageIndex + ".jpeg";
+        brickImage = new ImageIcon(imagePath).getImage();
         //draw the bricks but space them out
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -45,18 +49,15 @@ public class Atari implements ActionListener {
                         color = new Color(255, 0, 0, 180);
                         break;
                     case 1:
-                        color = new Color(255, 165, 0, 180);
+                        color = new Color(255, 255, 0, 150);
                         break;
                     case 2:
-                        color = new Color(255, 255, 0, 180);
-                        break;
-                    case 3:
-                        color = new Color(0, 255, 0, 180);
+                        color = new Color(0, 255, 0, 150);
                         break;
                     default:
-                        color = new Color(255, 0, 0, 180);
+                        color = new Color(255, 0, 0, 150);
                 }
-                bricks[i][j] = new Brick(brickX, brickY, brickWidth, brickHeight, color);
+                bricks[i][j] = new Brick(brickX, brickY, brickWidth, brickHeight, color, brickImage);
             }
         }
         // add in a reset variable that if true resets the game
@@ -215,7 +216,7 @@ public class Atari implements ActionListener {
         ball.setX(WINDOW_WIDTH / 2);
         ball.setY(WINDOW_HEIGHT / 2);
         ball.setDx((int) ((Math.random() * 25) - 12));
-        ball.setDy(ball.getDy());
+        ball.setDy((int) ((Math.random() * 9) - 4));
         resetBall = false;
         resetDelay = 0;
     }
@@ -266,6 +267,5 @@ public class Atari implements ActionListener {
     }
 
     public static void main(String[] args) {
-        Atari game = new Atari(WINDOW_WIDTH, WINDOW_HEIGHT, 4, 9);
-    }
+        Atari game = new Atari(WINDOW_WIDTH, WINDOW_HEIGHT, 3, 9);    }
 }

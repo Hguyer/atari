@@ -11,16 +11,14 @@ public class Brick {
     private Image image;
 
     // constructor
-    public Brick(int x, int y, int width, int height, Color color) {
+    public Brick(int x, int y, int width, int height, Color color, Image image) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
         this.isDestroyed = false;
-        int randomImageIndex = (int) (Math.random() * 16);
-        String imagePath = "Resources/" + randomImageIndex + ".jpeg";
-        this.image = new ImageIcon(imagePath).getImage();
+        this.image = image;this.image = image;
     }
     // getters and setters
     public void hit() {
