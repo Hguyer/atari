@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 
 public class Brick {
@@ -7,6 +8,8 @@ public class Brick {
     private int height;
     private boolean isDestroyed;
     private Color color;
+    private Image image;
+
     // constructor
     public Brick(int x, int y, int width, int height, Color color) {
         this.x = x;
@@ -15,6 +18,9 @@ public class Brick {
         this.height = height;
         this.color = color;
         this.isDestroyed = false;
+        int randomImageIndex = (int) (Math.random() * 16);
+        String imagePath = "Resources/" + randomImageIndex + ".jpeg";
+        this.image = new ImageIcon(imagePath).getImage();
     }
     // getters and setters
     public void hit() {
@@ -40,5 +46,8 @@ public class Brick {
     }
     public void reset() {
         this.isDestroyed = false;
+    }
+    public Image getImage() {
+        return image;
     }
 }

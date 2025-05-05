@@ -87,6 +87,7 @@ public class AtariViewer extends JFrame {
                 for (int j = 0; j < bricks[i].length; j++) {
                     Brick brick = bricks[i][j];
                     if (!brick.isDestroyed()) {
+                        offGraphics.drawImage(brick.getImage(), brick.getX(), brick.getY(), brick.getWidth(), brick.getHeight(), this);
                         offGraphics.setColor(brick.getColor());
                         offGraphics.fillRect(brick.getX(), brick.getY(), brick.getWidth(), brick.getHeight());
                     }
