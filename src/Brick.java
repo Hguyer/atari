@@ -18,7 +18,7 @@ public class Brick {
         this.height = height;
         this.color = color;
         this.isDestroyed = false;
-        this.image = image;this.image = image;
+        this.image = image;
     }
     // getters and setters
     public void hit() {

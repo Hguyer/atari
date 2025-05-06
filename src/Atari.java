@@ -34,9 +34,7 @@ public class Atari implements ActionListener {
         int brickHeight = 60;
         int brickWidth = 125;
         int spacing = 12;
-        int randomImageIndex = (int) (Math.random() * 16);
-        String imagePath = "Resources/" + randomImageIndex + ".jpeg";
-        brickImage = new ImageIcon(imagePath).getImage();
+        brickImage = loadRandomBrickImage();
         //draw the bricks but space them out
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -100,6 +98,13 @@ public class Atari implements ActionListener {
     public void updatePaddlePosition(int mouseX) {
         paddle.moveTo(mouseX - paddle.getWidth() / 2);
     }
+
+    private Image loadRandomBrickImage() {
+        int randomImageIndex = (int) (Math.random() * 16);
+        String imagePath = "Resources/" + randomImageIndex + ".jpeg";
+        return new ImageIcon(imagePath).getImage();
+    }
+
     // if the ball hits the paddle bounce off of it
     public void checkPaddleCollision() {
         Ball b = ball;
@@ -196,6 +201,7 @@ public class Atari implements ActionListener {
     }
 
     public void startNewLevel() {
+        brickImage = loadRandomBrickImage();
         ball.resetPosition();
         level++;
         resetBall = true;
@@ -222,7 +228,10 @@ public class Atari implements ActionListener {
     }
     public void reset(){
         this.score = 0;
-        this.lives = 3; // or however many lives you start with
+        this.lives = 3;
+
+        brickImage = loadRandomBrickImage();
+
 
         // Reset the ball position and velocity
         ball.resetPosition();

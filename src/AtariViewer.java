@@ -60,6 +60,11 @@ public class AtariViewer extends JFrame {
             offGraphics.drawString("Welcome to Atari Breakout!", 120, 330);
             offGraphics.setFont(new Font("Arial", Font.ITALIC, 60));
             offGraphics.drawString("Click to Start", 450, 400);
+            offGraphics.setFont(new Font("Arial", Font.ITALIC, 40));
+            offGraphics.drawString("Move your mouse to move the paddle!", 40, 500);
+            offGraphics.drawString("Don't let the ball hit the floor!", 150, 650);
+
+
         }
        else if (game.isGameOver()) {
             // Display game over screen
@@ -96,7 +101,7 @@ public class AtariViewer extends JFrame {
             if (game.allBricksDestroyed() && game.getLives() > 0 && !game.isGameOver()) {
                 offGraphics.setColor(Color.WHITE);
                 offGraphics.setFont(new Font("Arial", Font.BOLD, 80));
-                offGraphics.drawString("Level " + game.getLevel() + " Complete!", WINDOW_WIDTH / 2 - 300, WINDOW_HEIGHT / 2);
+                offGraphics.drawString("Level " + game.getLevel() + " Completed!", WINDOW_WIDTH / 2 - 300, WINDOW_HEIGHT / 2);
             }
 
             offGraphics.setColor(Color.WHITE);
