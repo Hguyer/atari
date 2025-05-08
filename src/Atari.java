@@ -209,6 +209,7 @@ public class Atari implements ActionListener {
         // Reset bricks
         for (int i = 0; i < bricks.length; i++) {
             for (int j = 0; j < bricks[i].length; j++) {
+                bricks[i][j].setImage(brickImage);
                 bricks[i][j].reset();
             }
         }
@@ -227,11 +228,9 @@ public class Atari implements ActionListener {
         resetDelay = 0;
     }
     public void reset(){
+        brickImage = loadRandomBrickImage();
         this.score = 0;
         this.lives = 3;
-
-        brickImage = loadRandomBrickImage();
-
 
         // Reset the ball position and velocity
         ball.resetPosition();
@@ -241,6 +240,7 @@ public class Atari implements ActionListener {
         // Reset all bricks (make them undestroyed)
         for (int i = 0; i < bricks.length; i++) {
             for (int j = 0; j < bricks[i].length; j++) {
+                bricks[i][j].setImage(brickImage);
                 bricks[i][j].reset();
             }
         }
