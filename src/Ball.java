@@ -54,6 +54,8 @@ public class Ball {
     public void setY(double y) {
         this.y = y;
     }
+
+    // reset to the middle
     public void resetPosition() {
         this.x = WINDOW_WIDTH / 2;
         this.y = WINDOW_HEIGHT / 2;

@@ -13,19 +13,12 @@ public class Paddle {
         this.height = height;
     }
 
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
-    public int getWidth() {
-        return width;
-    }
-    public int getHeight() {
-        return height;
+    public int getX() {return x;}
+    public int getY() {return y;}
+    public int getWidth() {return width;}
+    public int getHeight() {return height;}
 
-    }
+    // check if the paddle hits the ends
     public void moveTo(int x) {
         this.x = x;
         if (this.x < 0) {
@@ -34,6 +27,7 @@ public class Paddle {
             this.x = WINDOW_WIDTH - width;
         }
     }
+    // reset to the middle
     public void resetPosition() {
         this.x = 625 - (this.width / 2);
         this.y = 850;
