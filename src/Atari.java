@@ -53,16 +53,16 @@ public class Atari implements ActionListener {
                 // switch case for the colors and opacity
                 switch (i) {
                     case 0:
-                        color = new Color(255, 0, 0, 150);
+                        color = new Color(255, 0, 0, 100);
                         break;
                     case 1:
-                        color = new Color(255, 255, 0, 150);
+                        color = new Color(255, 255, 0, 100);
                         break;
                     case 2:
-                        color = new Color(0, 255, 0, 150);
+                        color = new Color(0, 255, 0, 100);
                         break;
                     default:
-                        color = new Color(255, 0, 0, 150);
+                        color = new Color(255, 0, 0, 100);
                 }
                 // initilize the bricks using the brick class
                 bricks[i][j] = new Brick(brickX, brickY, brickWidth, brickHeight, color, brickImage);
@@ -112,7 +112,7 @@ public class Atari implements ActionListener {
     }
     // use a random image, I labeled them 1-16 so math.random could be used
     private Image loadRandomBrickImage() {
-        int randomImageIndex = (int) (Math.random() * 16);
+        int randomImageIndex = (int) (Math.random() * 6);
         String imagePath = "Resources/" + randomImageIndex + ".jpeg";
         return new ImageIcon(imagePath).getImage();
     }
@@ -129,6 +129,7 @@ public class Atari implements ActionListener {
                 b.getY() <= p.getY() + p.getHeight()) {
             //randomness so it doesn't bounce where expected
             b.setDx(b.getDx() + (Math.random()* 11) - 5);
+            b.setY(b.getY() - 8);
             b.setDy(-b.getDy() + (Math.random()* 7) - 3);
         }
     }
@@ -311,5 +312,6 @@ public class Atari implements ActionListener {
     }
 
     public static void main(String[] args) {
-        Atari game = new Atari(WINDOW_WIDTH, WINDOW_HEIGHT, 3, 7);    }
+        Atari game = new Atari(WINDOW_WIDTH, WINDOW_HEIGHT, 3, 7);
+    }
 }
