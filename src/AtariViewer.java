@@ -106,7 +106,7 @@ public class AtariViewer extends JFrame {
             if (game.inBetweenLevels() && game.getLives() > 0 && !game.isGameOver()) {
                 offGraphics.setColor(Color.WHITE);
                 offGraphics.setFont(new Font("Arial", Font.BOLD, 80));
-                offGraphics.drawString("Level " + game.getLevel() + " Completed!", WINDOW_WIDTH / 2 - 300, WINDOW_HEIGHT / 2);
+                offGraphics.drawString("Level " + (game.getLevel() - 1) + " Completed!", WINDOW_WIDTH / 2 - 300, WINDOW_HEIGHT / 2);
             }
             // draw the paddle white
             offGraphics.setColor(Color.WHITE);
